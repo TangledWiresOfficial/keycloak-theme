@@ -93,9 +93,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             )}
             <header className={kcClsx("kcFormHeaderClass")}>
                 {(() => {
-                    const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
-                        <h1 id="kc-page-title">headerNode - unused</h1>
-                    ) : (
+                    const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? undefined : (
                         <div id="kc-username" className={kcClsx("kcFormGroupClass")}>
                             <label id="kc-attempted-username">{auth.attemptedUsername}</label>
                             <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
