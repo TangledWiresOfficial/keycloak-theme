@@ -9,11 +9,17 @@ import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 import { Alert, Dropdown, DropdownItem, DropdownList, LoginPage, MenuToggle, MenuToggleElement } from "@patternfly/react-core";
 import * as React from "react";
-import Logo from "./assets/logo_dark.svg";
+import LogoDark from "./assets/logo_dark.svg";
+import LogoLight from "./assets/logo_light.svg";
+import { useTheme } from "../useTheme";
+import { useStyle } from "../useStyle";
 
 import "@patternfly/react-core/dist/styles/base.css";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
+    const theme = useTheme();
+    useStyle();
+
     const {
         displayInfo = false,
         displayMessage = true,
@@ -60,7 +66,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     return (
         <LoginPage
             loginTitle={msgStr("loginAccountTitle")}
-            brandImgSrc={Logo}
+            brandImgSrc={theme === "dark" ? LogoDark : LogoLight}
             socialMediaLoginContent={socialProvidersNode}
             signUpForAccountMessage={displayInfo && infoNode}
             headerUtilities={
