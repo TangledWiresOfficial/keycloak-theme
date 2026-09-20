@@ -1,6 +1,6 @@
 {
     "name": "tangledwires-keycloak-theme",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "TangledWires theme for Keycloak",
     "repository": {
         "type": "git",
