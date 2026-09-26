@@ -11,10 +11,13 @@ import { Alert, Dropdown, DropdownItem, DropdownList, LoginPage, MenuToggle, Men
 import * as React from "react";
 import LogoDark from "./assets/logo_dark.svg";
 import LogoLight from "./assets/logo_light.svg";
-import { useTheme } from "../useTheme";
-import { useStyle } from "../useStyle";
+import { useTheme } from "./hooks/useTheme";
+import { useStyle } from "./hooks/useStyle";
 
 import "@patternfly/react-core/dist/styles/base.css";
+
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@fortawesome/fontawesome-free/css/v4-shims.min.css";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const theme = useTheme();
@@ -32,6 +35,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
         i18n,
         doUseDefaultCss,
         classes,
+        headerNode,
         children
     } = props;
 
@@ -65,7 +69,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     return (
         <LoginPage
-            loginTitle={msgStr("loginAccountTitle")}
+            loginTitle={headerNode as string} // Force PF to accept a ReactNode instead of a string
             brandImgSrc={theme === "dark" ? LogoDark : LogoLight}
             socialMediaLoginContent={socialProvidersNode}
             signUpForAccountMessage={displayInfo && infoNode}

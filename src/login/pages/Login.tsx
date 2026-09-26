@@ -4,20 +4,28 @@
  */
 import type { JSX } from "keycloakify/tools/JSX";
 import { useState } from "react";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
-import { clsx } from "keycloakify/tools/clsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { useScript } from "keycloakify/login/pages/Login.useScript";
-import { Button,
-    Checkbox, Form, FormGroup, FormHelperText, HelperText, HelperTextItem, InputGroup, InputGroupItem,
-    LoginMainFooterLinksItem, TextInput } from "@patternfly/react-core";
+import {
+    Button,
+    Checkbox,
+    Form,
+    FormGroup,
+    FormHelperText,
+    HelperText,
+    HelperTextItem,
+    InputGroup,
+    InputGroupItem,
+    TextInput
+} from "@patternfly/react-core";
 import RhUiErrorFillIcon from "@patternfly/react-icons/dist/esm/icons/rh-ui-error-fill-icon";
 import RhUiViewFillIcon from "@patternfly/react-icons/dist/esm/icons/rh-ui-view-fill-icon";
 import RhUiViewOffFillIcon from "@patternfly/react-icons/dist/esm/icons/rh-ui-view-off-fill-icon";
+import SocialProvidersNode from "../components/SocialProvidersNode.tsx";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -27,7 +35,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
         classes
     });
 
-    const { social, realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField, enableWebAuthnConditionalUI, authenticators } =
+    const { realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField, enableWebAuthnConditionalUI, authenticators } =
         kcContext;
 
     const { msg, msgStr } = i18n;
@@ -63,27 +71,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                     </div>
                 </div>
             }
-            socialProvidersNode={
-                <>
-                    {realm.password &&
-                        social?.providers !== undefined &&
-                        social.providers.length !== 0 &&
-                        social.providers.map((...[p, , providers]) => (
-                            <LoginMainFooterLinksItem key={p.alias}>
-                                <Button
-                                    id={`social-${p.alias}`}
-                                    className={kcClsx("kcFormSocialAccountListButtonClass", providers.length > 3 && "kcFormSocialAccountGridItem")}
-                                    variant="plain"
-                                    component="a"
-                                    href={p.loginUrl}
-                                    aria-label={kcSanitize(p.displayName)}
-                                    // icon={<i className={clsx(kcClsx("kcCommonLogoIdP"), p.iconClasses)} aria-hidden="true"></i>}
-                                    icon={<i className={clsx(p.iconClasses)} aria-hidden="true"></i>}
-                                />
-                            </LoginMainFooterLinksItem>
-                        ))}
-                </>
-            }
+            socialProvidersNode={<SocialProvidersNode kcContext={kcContext} doUseDefaultCss={doUseDefaultCss} classes={classes} />}
         >
             {realm.password && (
                 <Form
@@ -180,7 +168,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                         <Button
                             tabIndex={7}
                             disabled={isLoginButtonDisabled}
-                            // className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
                             variant="primary"
                             name="login"
                             id="kc-login"
@@ -216,6 +203,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                         id={webAuthnButtonId}
                         variant="secondary"
                         className={kcClsx("kcButtonClass", "kcButtonDefaultClass", "kcButtonBlockClass", "kcButtonLargeClass")}
+                        isBlock
                     >
                         {msgStr("passkey-doAuthenticate")}
                     </Button>
