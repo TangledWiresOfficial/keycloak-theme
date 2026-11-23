@@ -13,6 +13,7 @@ const doMakeUserConfirmPassword = true;
 const Login = lazy(() => import("./pages/Login"));
 const LoginUsername = lazy(() => import("./pages/LoginUsername"));
 const Terms = lazy(() => import("./pages/Terms"));
+const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant"));
 
 export default function KcPage(props: { kcContext: KcContext }) {
     const { kcContext } = props;
@@ -42,6 +43,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "terms.ftl":
                         return (
                             <Terms
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-oauth-grant.ftl":
+                        return (
+                            <LoginOauthGrant
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
